@@ -10,13 +10,14 @@ pool:
   vmImage: 'ubuntu-latest'
 
 jobs:
-  - job: InstallNode
+  - job: environment
     steps:
     - task: NodeTool@0
       inputs:
         versionSpec: '12.x'
       displayName: 'Install Node.js'
-  - job: Build
+  - job: build
+    dependsOn: 'environment'
     steps: 
     - script: |
         npm install
@@ -25,3 +26,19 @@ jobs:
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(System.DefaultWorkingDirectory)/dist'
+  - job: test
+    dependsOn: 'environment'
+    steps: 
+    - script: |
+        npm install
+        npm run test
+      displayName: 'Run Test'
+    - task: PublishTestResults@2
+      displayName: 'publish test results'
+      condition: succeededOrFailed()
+      inputs:
+        searchFolder: $(System.DefaultWorkingDirectory)/junit
+        failTaskOnFailedTests: true
+        testRunTitle: Test report
+        testResultsFormat: JUnit
+        testResultsFiles: "**/TESTS*.xml"
