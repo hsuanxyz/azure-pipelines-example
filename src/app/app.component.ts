@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'azure-pipelines-example';
+
+  fun(): void {
+    console.log('Test coverage')
+  }
 }
