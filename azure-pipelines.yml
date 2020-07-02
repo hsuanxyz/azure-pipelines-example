@@ -16,13 +16,11 @@ jobs:
       inputs:
         versionSpec: '12.x'
       displayName: 'Install Node.js'
-    - script: |
-        npm install
-        npm install -g @angular/cli
   - job: build
     dependsOn: 'environment'
     steps: 
     - script: |
+        npm install
         npm run build
       displayName: 'Build Application'
     - task: PublishBuildArtifacts@1
@@ -32,5 +30,6 @@ jobs:
     dependsOn: 'environment'
     steps: 
     - script: |
+        npm install
         npm run test
       displayName: 'Run Test'       
