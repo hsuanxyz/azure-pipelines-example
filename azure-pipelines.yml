@@ -10,18 +10,26 @@ pool:
   vmImage: 'ubuntu-latest'
 
 jobs:
-  - job: InstallNode
+  - job: environment
     steps:
     - task: NodeTool@0
       inputs:
         versionSpec: '12.x'
       displayName: 'Install Node.js'
-  - job: Build
-    steps: 
     - script: |
         npm install
+        npm install -g @angular/cli
+  - job: build
+    dependsOn: 'environment'
+    steps: 
+    - script: |
         npm run build
       displayName: 'Build Application'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(System.DefaultWorkingDirectory)/dist'
+  - job: Test
+    steps: 
+    - script: |
+        npm run test
+      displayName: 'Run Test'       
