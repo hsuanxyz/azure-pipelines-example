@@ -28,7 +28,8 @@ jobs:
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(System.DefaultWorkingDirectory)/dist'
-  - job: Test
+  - job: test
+    dependsOn: 'environment'
     steps: 
     - script: |
         npm run test
