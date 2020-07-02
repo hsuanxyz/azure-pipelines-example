@@ -22,3 +22,6 @@ jobs:
         npm install
         npm run build
       displayName: 'Build Application'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(System.DefaultWorkingDirectory)/dist'
