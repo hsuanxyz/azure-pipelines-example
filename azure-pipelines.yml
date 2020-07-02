@@ -32,6 +32,7 @@ jobs:
     - script: |
         npm install
         npm run test
+        bash <(curl -s https://codecov.io/bash)
       displayName: 'Run Test'
     - task: PublishTestResults@2
       displayName: 'publish test results'
@@ -42,3 +43,11 @@ jobs:
         testRunTitle: Test report
         testResultsFormat: JUnit
         testResultsFiles: "**/TESTS*.xml"
+    - task: PublishCodeCoverageResults@1
+      displayName: 'publish code coverage results'
+      condition: succeededOrFailed()
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: $(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml
+        reportDirectory: $(System.DefaultWorkingDirectory)/coverage
+        failIfCoverageEmpty: true
