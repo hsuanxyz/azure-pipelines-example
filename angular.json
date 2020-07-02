@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "azure-pipelines-example"
+    }
+  },
+  "defaultProject": "azure-pipelines-example",
+  "cli": {
+    "analytics": false
+  }
 }
