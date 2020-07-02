@@ -32,4 +32,13 @@ jobs:
     - script: |
         npm install
         npm run test
-      displayName: 'Run Test'       
+      displayName: 'Run Test'
+    - task: PublishTestResults@2
+      displayName: 'publish test results'
+      condition: succeededOrFailed()
+      inputs:
+        searchFolder: $(System.DefaultWorkingDirectory)/junit
+        failTaskOnFailedTests: true
+        testRunTitle: Test report
+        testResultsFormat: JUnit
+        testResultsFiles: "**/TESTS*.xml"
