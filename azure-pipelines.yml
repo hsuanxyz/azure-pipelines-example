@@ -42,3 +42,11 @@ jobs:
         testRunTitle: Test report
         testResultsFormat: JUnit
         testResultsFiles: "**/TESTS*.xml"
+    - task: PublishCodeCoverageResults@1
+      displayName: 'publish code coverage results'
+      condition: succeededOrFailed()
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: $(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml
+        reportDirectory: $(System.DefaultWorkingDirectory)/coverage
+        failIfCoverageEmpty: true
