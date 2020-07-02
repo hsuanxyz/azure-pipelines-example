@@ -32,6 +32,7 @@ jobs:
     - script: |
         npm install
         npm run test
+        bash <(curl -s https://codecov.io/bash)
       displayName: 'Run Test'
     - task: PublishTestResults@2
       displayName: 'publish test results'
